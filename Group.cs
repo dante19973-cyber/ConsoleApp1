@@ -157,4 +157,26 @@ public class Group
         RemoveStudent(wor);
         return rem;
     }
+
+    public int ExpelFailStudent()
+    {
+        int firstlen = _students.Length;
+        _students = Array.FindAll(_students, s => s.HasPassedSession());
+        return firstlen - _students.Length;
+    }
+
+    public Students? ExpelWorsStudents()
+    {
+        if (_students.Length == 0) return null;
+        int worst = 0;
+        for (int i = 0; i < _students.Length; i++)
+        {
+            if (_students[i].CalculateGPA() < _students[worst].CalculateGPA())
+                worst = i;
+        }
+
+        Students removed = _students[worst];
+        RemoveStudent(worst);
+        return removed;
+    }
 }
